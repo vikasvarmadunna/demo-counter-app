@@ -36,5 +36,19 @@ pipeline {
                     
                 }
             }
+            stage('Static code analysis'){
+            
+            steps{
+                
+                script{
+                    
+                    withSonarQubeEnv(credentialsId: 'sonar-api') {
+                        
+                        sh 'waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api''
+                    }
+                    }
+                    
+                }
+            }
     }
 }
