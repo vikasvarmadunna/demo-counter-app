@@ -24,10 +24,14 @@ pipeline {
         }
         stage('sonarqube'){
             steps{
-                withSonarQubeEnv(credentialsId: 'sonar-api') {
-                sh 'mvn clean package sonar:sonar'
-}
-            }
+            script{
+                    
+                    withSonarQubeEnv(credentialsId: 'sonar-api') {
+                        
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
         }
+    }
     }
 }
