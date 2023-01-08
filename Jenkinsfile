@@ -4,7 +4,7 @@ pipeline {
     stages{
         stage('git checkout'){
             steps{
-                git branch: 'dev', credentialsId: 'vyshu', url: 'https://github.com/vikasvarmadunna/demo-counter-app.git'
+                git branch: 'dev', credentialsId: 'java', url: 'https://github.com/vikasvarmadunna/demo-counter-app.git'
             }
         }
         stage('unit testing'){
