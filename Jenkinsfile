@@ -1,25 +1,47 @@
-pipeline {
-    agent any
-
-    stages{
-        stage('git checkout'){
+pipeline{
+    
+    agent any 
+    
+    stages {
+        
+        stage('Git Checkout'){
+            
             steps{
-                git branch: 'dev', credentialsId: 'java', url: 'https://github.com/vikasvarmadunna/demo-counter-app.git'
+                
+                script{
+                    
+                    git branch: 'dev', url: 'https://github.com/vikasvarmadunna/demo-counter-app.git'
+                }
             }
         }
-        stage('unit testing'){
+        stage('UNIT testing'){
+            
             steps{
-                sh 'mvn test'
+                
+                script{
+                    
+                    sh 'mvn test'
+                }
             }
         }
-        stage('integration testing'){
+        stage('Integration testing'){
+            
             steps{
-                sh 'mvn verify -DskipUnitTests'
+                
+                script{
+                    
+                    sh 'mvn verify -DskipUnitTests'
+                }
             }
         }
-        stage('maven build'){
+        stage('Maven build'){
+            
             steps{
-                sh 'mvn clean install'
+                
+                script{
+                    
+                    sh 'mvn clean install'
+                }
             }
         }
         stage('Static code analysis'){
@@ -36,41 +58,16 @@ pipeline {
                     
                 }
             }
-        stage('quality gate analysis'){
-            
-            steps{
+            stage('Quality Gate Status'){
                 
-                script{
+                steps{
+                    
+                    script{
                         
                         waitForQualityGate abortPipeline: false, credentialsId: 'sonar-apis'
                 }
             }
         }
-        stage('nexus repository'){
-            
-            steps{
-                
-                script{
-                        
-                        nexusArtifactUploader artifacts:
-                        [
-                            [
-                                artifactId: 'springboot',
-                                classifier: '', file: 'target/Uber.jar',
-                                type: 'jar'
-                                ]
-                        ],     
-                        credentialsId: 'vyshu',
-                        groupId: 'com.example', 
-                        nexusUrl: '44.211.37.12:8081', 
-                        nexusVersion: 'nexus3', 
-                        protocol: 'http',
-                        repository: 'demoapp-release',
-                        version: '1.0.0'
-                }
-            }
-        }
-
     }
 }
 
