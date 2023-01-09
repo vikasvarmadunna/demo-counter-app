@@ -91,11 +91,13 @@ pipeline{
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'nexusRepo',
-                    version: "${readPomversion.version}"
+                    version: "${readPomVersion.version}"
                 }
             }
         }
+        }
     }
-}
+
+
 
 
