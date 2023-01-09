@@ -42,7 +42,7 @@ pipeline {
                 
                 script{
                         
-                        sh 'waitForQualityGate abortPipeline: false, credentialsId: 'sonar-apis''
+                        waitForQualityGate abortPipeline: false, credentialsId: 'sonar-apis'
                 }
             }
         }
