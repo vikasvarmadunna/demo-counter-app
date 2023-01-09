@@ -36,5 +36,17 @@ pipeline {
                     
                 }
             }
+        stage('quality gate analysis'){
+            
+            steps{
+                
+                script{
+                        
+                        sh 'waitForQualityGate abortPipeline: false, credentialsId: 'sonar-apis''
+                }
+            }
+        }
     }
 }
+ 
+
